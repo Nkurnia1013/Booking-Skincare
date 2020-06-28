@@ -5,7 +5,7 @@
                 <h1 class="mb-0 site-logo"><a href="Home" class="text-white mb-0">Tasqi Skincare <span class="text-primary">Dumai</span> </a></h1>
             </div>
             <div class="col-12 col-md-8 d-none d-xl-block">
-                <nav style="zoom:80%" class="site-navigation position-relative text-right" role="navigation">
+                <nav style="zoom:90%" class="site-navigation position-relative text-right" role="navigation">
                     <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
                         <li class="<?php if ($data['link'] == 'Home'): ?> active <?php endif;?>"><a href="Home"><span>Home</span></a></li>
                          <?php if (isset($Session['admin'])): ?>
