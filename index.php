@@ -55,17 +55,21 @@ $route = [
     'Daftar' => ['class' => "app\Standalone", '@' => 'Daftar'],
     'Logout' => ['class' => "app\Standalone", '@' => 'Logout'],
     'Home' => ['class' => "app\Standalone", '@' => 'Home'],
+    'Booking' => ['class' => "app\Standalone", '@' => 'Booking'],
+    'KBooking' => ['class' => "app\Standalone", '@' => 'KBooking'],
     'Perawatan' => ['class' => "app\Standalone", '@' => 'Perawatan'],
     'Data-Perawatan' => ['class' => "app\Admin", '@' => 'Perawatan'],
     'Data-Pengguna' => ['class' => "app\Admin", '@' => 'Pengguna'],
+    'Laporan-Perawatan' => ['class' => "app\Admin", '@' => 'LaporanPerawatan'],
+    'Laporan-Booking' => ['class' => "app\Admin", '@' => 'LaporanBooking'],
 
 ];
 
 $ctr = $route[$hal]['class'];
 $hal2 = $route[$hal]['@'];
 $Controller = new $ctr;
-
 $komponen = 'views/Komponen';
 $data = $Controller->$hal2($Request, $Session);
+
 include 'views/html.php';
 /* Start to develop here. Best regards https://php-download.com/ */

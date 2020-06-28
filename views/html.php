@@ -15,7 +15,13 @@
         <?php include 'nav.php';?>
         <?php if (!in_array($hal, $atas)): ?>
         <?php include 'Pages/' . $data['path'] . ".php";?>
+        <?php if (!in_array($hal, ['Laporan-Perawatan', 'Laporan-Booking'])): ?>
+        <?php include 'footer.php';?>
         <?php endif;?>
+
+
+        <?php endif;?>
+
          <div class="container">
             <div class="row ">
                 <div class="col-12 mt-2 text-md-center text-left">
@@ -29,6 +35,7 @@
                 </div>
             </div>
         </div>
+
 
         <?php include 'js.php';?>
 </body>

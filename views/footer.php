@@ -1,4 +1,4 @@
- <div class="block-half-content-1 d-block d-lg-flex mt-5">
+ <div class="block-half-content-1 d-block d-lg-flex ">
             <div class="block-half-content-img" style="background-image: url('images/bg.jpg')">
             </div>
             <div class="block-half-content-text bg-pink2">

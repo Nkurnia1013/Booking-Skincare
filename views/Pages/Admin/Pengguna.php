@@ -17,7 +17,7 @@
                                         <?php foreach ($data['user.form'] as $isi): ?>
                                         <?php if ($isi['name'] == 'jk'): ?>
                                         <div class="form-grup col-4 mb-2 input-group-sm">
-                                            <label class="form-control-label">Jenis Kelamin</label>
+                                            <label class="form-control-label text-dark">Jenis Kelamin</label>
                                             <select class="form-control multi" name="input[]">
                                                 <option value="Laki-Laki">Laki-Laki</option>
                                                 <option value="Perempuan">Perempuan</option>
