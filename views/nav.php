@@ -5,10 +5,16 @@
                 <h1 class="mb-0 site-logo"><a href="Home" class="text-white mb-0">Tasqi Skincare <span class="text-primary">Dumai</span> </a></h1>
             </div>
             <div class="col-12 col-md-8 d-none d-xl-block">
-                <nav class="site-navigation position-relative text-right" role="navigation">
+                <nav style="zoom:80%" class="site-navigation position-relative text-right" role="navigation">
                     <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
                         <li class="<?php if ($data['link'] == 'Home'): ?> active <?php endif;?>"><a href="Home"><span>Home</span></a></li>
+                         <?php if (isset($Session['admin'])): ?>
+
+                        <li class="<?php if ($data['link'] == 'Profil'): ?> active <?php endif;?>"><a href="Profil"><span>Profil</span></a></li>
+                        <?php endif;?>
                         <li class="<?php if ($data['link'] == 'Perawatan'): ?> active <?php endif;?>"><a href="Perawatan"><span>Perawatan</span></a></li>
+
+
                         <?php if (isset($Session['admin'])): ?>
                         <?php if ($Session['admin']->jenis == 'Admin'): ?>
                         <li class="has-children">

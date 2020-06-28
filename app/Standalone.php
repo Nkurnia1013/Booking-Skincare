@@ -65,6 +65,46 @@ class Standalone
 
         return $data;
     }
+    public function Profil($Request, $Session)
+    {
+        $data = [
+            'judul' => 'Profil',
+            'path' => 'Profil',
+            'link' => 'Profil',
+
+        ];
+        // Fungsi::fields('pengguna', $Crud);
+        $fields1 = '[
+                {"name":"idpengguna","label":"ID Pengguna","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
+                {"name":"nama","label":"Nama Lengkap","type":"text","max":"30","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"jk","label":"Jenis Kelamin","type":"text","max":"10","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"alamat","label":"Alamat","type":"text","max":"40","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
+                ]';
+        $data['user.form'] = json_decode($fields1, true);
+        $fields1 = '[
+                {"name":"no_hp","label":"No HP","type":"text","max":"12","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+
+                {"name":"email","label":"Email","type":"email","max":"35","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"username","label":"Username","type":"text","max":"15","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"password","label":"Password","type":"password","max":"15","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true}
+                ]';
+        $data['user.form2'] = json_decode($fields1, true);
+
+        $data['user.form'][0]['val'] = "P-" . uniqid();
+
+        foreach ($data['user.form'] as $v => $k) {
+            $b = $k['name'];
+            $data['user.form'][$v]['val'] = $Session['admin']->$b;
+
+        }
+        foreach ($data['user.form2'] as $v => $k) {
+            $b = $k['name'];
+            $data['user.form2'][$v]['val'] = $Session['admin']->$b;
+
+        }
+
+        return $data;
+    }
     public function Perawatan($Request, $Session)
     {
         $data = [

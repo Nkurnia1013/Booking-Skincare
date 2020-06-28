@@ -32,7 +32,7 @@ if ($hal == '') {
 }
 $free = ['Login', 'Logout', 'Home', 'Daftar', 'Perawatan'];
 $admin = ['Data-Perawatan', 'Data-Pengguna'];
-$atas = ['Login', 'Daftar', 'Data-Perawatan', 'Data-Pengguna'];
+$atas = ['Login', 'Daftar', 'Data-Perawatan', 'Data-Pengguna', 'Profil'];
 
 if (!in_array($hal, $free)) {
 
@@ -55,6 +55,7 @@ $route = [
     'Daftar' => ['class' => "app\Standalone", '@' => 'Daftar'],
     'Logout' => ['class' => "app\Standalone", '@' => 'Logout'],
     'Home' => ['class' => "app\Standalone", '@' => 'Home'],
+    'Profil' => ['class' => "app\Standalone", '@' => 'Profil'],
     'Booking' => ['class' => "app\Standalone", '@' => 'Booking'],
     'KBooking' => ['class' => "app\Standalone", '@' => 'KBooking'],
     'Perawatan' => ['class' => "app\Standalone", '@' => 'Perawatan'],
