@@ -39,8 +39,8 @@
                 </div>
                 <div class="card-footer text-right">
                     <input type="hidden" name="table" value="pengguna">
-                    <input type="hidden" name="link" value="Login">
-                    <input type="hidden" name="pesan" value="Berhasil Daftar, Silahkan Login">
+                    <input type="hidden" name="key" value="<?php echo $Session['admin']->idpengguna; ?>">
+                    <input type="hidden" name="primary" value="idpengguna">
                     <button type="submit" name="aksi" value="update" class="btn btn-sm btn-pink2">Simpan</button>
                     <a href="Login" class="btn btn-sm btn-warning">Batal</a>
                 </div>

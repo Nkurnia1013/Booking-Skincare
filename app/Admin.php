@@ -6,6 +6,7 @@
 
 namespace app;
 
+use ClanCats\Hydrahon\Query\Expression as Ex;
 use \Crud as Crud;
 
 class Admin
@@ -44,6 +45,13 @@ class Admin
         $data['form'] = json_decode($fields1, true);
         $data['form'][0]['val'] = "Pn-" . uniqid();
         $data['data'] = collect(Crud::table('perawatan')->select()->get());
+        if (isset($Request->key)) {
+            $data['key'] = $data['data']->where('id_perawatan', $Request->key)->first();
+            foreach ($data['form'] as $v => $k) {
+                $b = $k['name'];
+                $data['form'][$v]['val'] = $data['key']->$b;
+            }
+        }
 
         return $data;
     }
@@ -82,7 +90,18 @@ class Admin
         $data['user.form2'] = json_decode($fields1, true);
 
         $data['user.form'][0]['val'] = "P-" . uniqid();
-        $data['data'] = collect(Crud::table('perawatan')->select()->get());
+        $data['data'] = collect(Crud::table('pengguna')->select()->where('jenis', $Request->jenis)->get());
+        if (isset($Request->key)) {
+            $data['key'] = $data['data']->where('idpengguna', $Request->key)->first();
+            foreach ($data['user.form'] as $v => $k) {
+                $b = $k['name'];
+                $data['user.form'][$v]['val'] = $data['key']->$b;
+            }
+            foreach ($data['user.form2'] as $v => $k) {
+                $b = $k['name'];
+                $data['user.form2'][$v]['val'] = $data['key']->$b;
+            }
+        }
 
         return $data;
     }
@@ -104,9 +123,37 @@ class Admin
                 {"name":"desk","label":"Deskripsi","type":"textarea","max":"65535","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
                 ]';
         $data['form'] = json_decode($fields1, true);
-        $data['form'][0]['val'] = "Pn-" . uniqid();
-        $data['data'] = collect(Crud::table('perawatan')->select()->get());
+        if (isset($Request->tgl)) {
+            switch ($Request->jenis) {
+                case 'mingguan':
+                    $hari = [
+                        1 => [1, 8], [8, 15], [15, 22], [22, 31],
 
+                    ];
+                    $data['booking'] = collect(Crud::table('booking')->select()->where(new Ex('day(tgl_booking)'), "<", $hari[$Request->tgl[0]][1])->where(new Ex('day(tgl_booking)'), ">=", $hari[$Request->tgl[0]][0])->where(new Ex('MONTH(tgl_booking)'), $Request->tgl[1])->where(new Ex('year(tgl_booking)'), $Request->tgl[2])->get());
+
+                    break;
+                case 'bulanan':
+                    $data['booking'] = collect(Crud::table('booking')->select()->where(new Ex('MONTH(tgl_booking)'), $Request->tgl[1])->where(new Ex('year(tgl_booking)'), $Request->tgl[2])->get());
+
+                    break;
+                case 'tahuanan':
+                    $data['booking'] = collect(Crud::table('booking')->select()->where(new Ex('year(tgl_booking)'), $Request->tgl[2])->get());
+
+                    break;
+
+            }
+
+        }
+        $data['status'] = collect(Crud::table('booking')->select()->get())->unique('status')->pluck('status');
+        $data['data'] = collect(Crud::table('perawatan')->select()->get())->map(function ($item) use ($data) {
+            foreach ($data['status'] as $k) {
+                $item->$k = $data['booking']->where('id_perawatan', $item->id_perawatan)->where('status', $k)->count();
+
+            }
+            return $item;
+
+        });
         return $data;
     }
     public function LaporanBooking($Request, $Session)
@@ -127,8 +174,29 @@ class Admin
                 {"name":"desk","label":"Deskripsi","type":"textarea","max":"65535","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
                 ]';
         $data['form'] = json_decode($fields1, true);
-        $data['form'][0]['val'] = "Pn-" . uniqid();
-        $data['data'] = collect(Crud::table('perawatan')->select()->get());
+
+        if (isset($Request->tgl)) {
+            switch ($Request->jenis) {
+                case 'mingguan':
+                    $hari = [
+                        1 => [1, 8], [8, 15], [15, 22], [22, 31],
+
+                    ];
+                    $data['booking'] = collect(Crud::table('booking')->select()->join('pengguna', 'pengguna.idpengguna', '=', 'booking.idpengguna')->join('perawatan', 'perawatan.id_perawatan', '=', 'booking.id_perawatan')->where(new Ex('day(tgl_booking)'), "<", $hari[$Request->tgl[0]][1])->where(new Ex('day(tgl_booking)'), ">=", $hari[$Request->tgl[0]][0])->where(new Ex('MONTH(tgl_booking)'), $Request->tgl[1])->where(new Ex('year(tgl_booking)'), $Request->tgl[2])->get());
+
+                    break;
+                case 'bulanan':
+                    $data['booking'] = collect(Crud::table('booking')->select()->join('pengguna', 'pengguna.idpengguna', '=', 'booking.idpengguna')->join('perawatan', 'perawatan.id_perawatan', '=', 'booking.id_perawatan')->where(new Ex('MONTH(tgl_booking)'), $Request->tgl[1])->where(new Ex('year(tgl_booking)'), $Request->tgl[2])->get());
+
+                    break;
+                case 'tahuanan':
+                    $data['booking'] = collect(Crud::table('booking')->select()->join('pengguna', 'pengguna.idpengguna', '=', 'booking.idpengguna')->join('perawatan', 'perawatan.id_perawatan', '=', 'booking.id_perawatan')->where(new Ex('year(tgl_booking)'), $Request->tgl[2])->get());
+
+                    break;
+
+            }
+
+        }
 
         return $data;
     }

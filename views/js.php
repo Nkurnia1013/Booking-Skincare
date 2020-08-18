@@ -16,7 +16,7 @@
 <script src="js/typed.js"></script>
 <script>
 var typed = new Typed('.typed-words', {
-    strings: ["Benefit 1", " Glowing 2", " Benefit 3"],
+    strings: ["Mikrodermabrasi", "Photottheray", "Mesotterapy", "Facial Spa", "dan Perawatan Tubuh Lainnya."],
     typeSpeed: 80,
     backSpeed: 80,
     backDelay: 4000,

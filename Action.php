@@ -3,6 +3,7 @@ session_start();
 
 require_once "vendor/autoload.php";
 require_once "Crud.php";
+require_once "app/Fungsi.php";
 $Crud = Crud::idupin()->mysqli2;
 $Request = json_decode(json_encode($_REQUEST));
 $aksi = $Request->aksi;
@@ -14,6 +15,7 @@ if (isset($Request->link)) {
 if (isset($Request->pesan)) {
     $pesan = $Request->pesan;
 }
+use app\Fungsi as Fungsi;
 
 $aksi($Request, $Crud, $link, $pesan);
 function insert($Request, $Crud, $link, $pesan)

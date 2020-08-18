@@ -23,4 +23,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
+    <style type="text/css">
+        .info-per{
+            margin-top: -50px;
+            z-index: 100;
+            transition: margin 0.5s;
+        }
+        .info-per:hover{
+            margin-top: -10px;
+
+
+        }
+    </style>
 </head>

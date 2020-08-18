@@ -58,6 +58,7 @@ $route = [
     'Profil' => ['class' => "app\Standalone", '@' => 'Profil'],
     'Booking' => ['class' => "app\Standalone", '@' => 'Booking'],
     'KBooking' => ['class' => "app\Standalone", '@' => 'KBooking'],
+    'TBooking' => ['class' => "app\Standalone", '@' => 'TBooking'],
     'Perawatan' => ['class' => "app\Standalone", '@' => 'Perawatan'],
     'Data-Perawatan' => ['class' => "app\Admin", '@' => 'Perawatan'],
     'Data-Pengguna' => ['class' => "app\Admin", '@' => 'Pengguna'],

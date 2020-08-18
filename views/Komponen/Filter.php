@@ -8,16 +8,18 @@
                     <div class="form-grup col-lg-12 mb-3 ">
                         <label class="form-control-label">Pilih Set Laporan</label>
                         <div class="input-group mb-3 d-flex">
+                            <span class="mx-2"><input required="" value="mingguan" type="radio" name="jenis"> Mingguan</span>
+
                             <span class="mx-2"><input required="" value="bulanan" type="radio" name="jenis"> Bulanan</span>
                             <span class="mx-2"><input required="" value="tahuanan" type="radio" name="jenis"> Tahunan</span>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <select class="custom-select" name="tgl[]">
-                                   <option>Minggu ke-1</option>
-                                   <option>Minggu ke-2</option>
-                                   <option>Minggu ke-3</option>
-                                   <option>Minggu ke-4</option>
+                                   <option value="1">Minggu ke-1</option>
+                                   <option value="2">Minggu ke-2</option>
+                                   <option value="3">Minggu ke-3</option>
+                                   <option value="4">Minggu ke-4</option>
                                 </select>
                             </div>
                             <div class="input-group-prepend">
@@ -31,7 +33,6 @@
                             </div>
                             <input autocomplete="off" type="number" value="2020" min="1970" required="" class="form-control form-control-line" name="tgl[]">
                             <div class="input-group-append">
-                                <input type="hidden" name="hal" value="<?php echo $_REQUEST['hal']; ?>">
                                 <button type="submit" class="btn btn-pink2 float-right">Set</button>
                             </div>
                         </div>

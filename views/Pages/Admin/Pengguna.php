@@ -19,8 +19,8 @@
                                         <div class="form-grup col-4 mb-2 input-group-sm">
                                             <label class="form-control-label text-dark">Jenis Kelamin</label>
                                             <select class="form-control multi" name="input[]">
-                                                <option value="Laki-Laki">Laki-Laki</option>
-                                                <option value="Perempuan">Perempuan</option>
+                                                <option <?php if ($isi['val'] == 'Laki-Laki'): ?> selected <?php endif;?> value="Laki-Laki">Laki-Laki</option>
+                                                <option <?php if ($isi['val'] == 'Perempuan'): ?> selected <?php endif;?> value="Perempuan">Perempuan</option>
                                             </select>
                                             <input type="hidden" name="tb[]" value="jk">
                                         </div>
@@ -47,9 +47,9 @@
                                     <?php if (!isset($Request->key)): ?>
                                     <button type="submit" name="aksi" value="insert" class="btn btn-sm  btn-pink2">Tambah</button>
                                     <?php else: ?>
-                                    <input type="hidden" name="link" value="index.php?hal=PaketTambahan">
+                                    <input type="hidden" name="link" value="<?php echo $hal; ?>?jenis=<?php echo $Request->jenis; ?>">
                                     <input type="hidden" name="key" value="<?php echo $Request->key; ?>">
-                                    <input type="hidden" name="primary" value="idpt">
+                                    <input type="hidden" name="primary" value="idpengguna">
                                     <button type="submit" name="aksi" value="update" class="btn btn-sm  btn-info">Edit</button>
                                     <button type="submit" name="aksi" value="delete" class="btn btn-sm  btn-warning">Hapus</button>
                                     <?php endif;?>
@@ -60,7 +60,7 @@
             <div class="  col-8 mb-5">
                 <div class="card rounded shadow" style="zoom:85%">
                     <h5 class="text-dark ml-2 text-center mt-1 pt-1">Tabel Data</h5>
-                    <table width="100%" class="text-wrap mb-0 tb table table-borderless table-striped table-hover ">
+                    <table width="100%" class="text-nowrap mb-0 tb table table-borderless table-striped table-hover ">
                         <thead class="">
                             <tr>
                                 <th class="w-1">#</th>
@@ -89,7 +89,7 @@
                                 </td>
                                 <?php foreach ($data['user.form'] as $e1): ?>
                                 <?php if ($e1['tb']): ?>
-                                <td class="text-wrap">
+                                <td class="text-nowrap">
                                     <?php $b = $e1['name'];?>
                                     <?php if ($b == 'harga'): ?>
                                     Rp.
@@ -102,7 +102,7 @@
                                 <?php endforeach;?>
                                 <?php foreach ($data['user.form2'] as $e1): ?>
                                 <?php if ($e1['tb']): ?>
-                                <td class="text-wrap">
+                                <td class="text-nowrap">
                                     <?php $b = $e1['name'];?>
                                     <?php if ($b == 'harga'): ?>
                                     Rp.
@@ -114,7 +114,7 @@
                                 <?php endif;?>
                                 <?php endforeach;?>
                                 <td class="text-right ">
-                                    <a href="?hal=PaketTambahan&key=<?php echo $k->idpt; ?>" class="btn btn-warning btn-sm">kelola Paket</a>
+                                    <a href="?key=<?php echo $k->idpengguna; ?>&jenis=<?php echo $Request->jenis; ?>" class="btn btn-warning btn-sm">kelola</a>
                                 </td>
                             </tr>
                             <?php endforeach;?>

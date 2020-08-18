@@ -91,6 +91,7 @@ class Standalone
         $data['user.form2'] = json_decode($fields1, true);
 
         $data['user.form'][0]['val'] = "P-" . uniqid();
+        $Session['admin'] = collect(Crud::table('pengguna')->select()->where('username', $Session['admin']->username)->where('password', $Session['admin']->password)->get())->first();
 
         foreach ($data['user.form'] as $v => $k) {
             $b = $k['name'];
@@ -124,6 +125,7 @@ class Standalone
                 ]';
         $data['form'] = json_decode($fields1, true);
         $data['form'][0]['val'] = "Pn-" . uniqid();
+        $data['data'] = collect(Crud::table('perawatan')->select()->get());
 
         return $data;
     }
@@ -136,17 +138,13 @@ class Standalone
 
         ];
         //Fungsi::fields('perawatan', new Crud);
-        $fields1 = '[
-                {"name":"id_perawatan","label":"ID Perawatan","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
-                {"name":"nama_perawatan","label":"Nama Perawatan","type":"text","max":"30","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"jenis_perawatan","label":"Jenis Perawatan","type":"text","max":"25","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"harga","label":"Harga","type":"number","max":null,"pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"gambar","label":"Gambar","type":"text","max":"65535","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"desk","label":"Deskripsi","type":"textarea","max":"65535","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
-                ]';
-        $data['form'] = json_decode($fields1, true);
-        $data['form'][0]['val'] = "Pn-" . uniqid();
-        $data['data'] = collect(Crud::table('perawatan')->select()->get());
+        if ($Session['admin']->jenis == 'Pelanggan') {
+            $data['data'] = collect(Crud::table('booking')->select()->join('pengguna', 'pengguna.idpengguna', '=', 'booking.idpengguna')->join('perawatan', 'perawatan.id_perawatan', '=', 'booking.id_perawatan')->where('pengguna.idpengguna', $Session['admin']->idpengguna)->get());
+
+        } else {
+            $data['data'] = collect(Crud::table('booking')->select()->join('pengguna', 'pengguna.idpengguna', '=', 'booking.idpengguna')->join('perawatan', 'perawatan.id_perawatan', '=', 'booking.id_perawatan')->get());
+
+        }
 
         return $data;
     }
@@ -160,8 +158,34 @@ class Standalone
         ];
         //Fungsi::fields('perawatan', new Crud);
         $fields1 = '[
-                {"name":"id_perawatan","label":"ID Booking","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
-                {"name":"gambar","label":"Tanggal Booking","type":"text","max":"65535","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"id_perawatan","label":"ID Perawatan","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
+                {"name":"nama_perawatan","label":"Nama Perawatan","type":"text","max":"30","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"jenis_perawatan","label":"Jenis Perawatan","type":"text","max":"25","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"harga","label":"Harga","type":"number","max":null,"pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"desk","label":"Deskripsi","type":"textarea","max":"65535","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"idbooking","label":"ID Booking","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
+                {"name":"tgl_booking","label":"Tanggal Booking","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
+                {"name":"nama","label":"Dibooking Oleh","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
+                {"name":"no_hp","label":"No Hp","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true}
+
+
+                ]';
+        $data['form'] = json_decode($fields1, true);
+        $data['data'] = collect(Crud::table('booking')->select()->join('pengguna', 'pengguna.idpengguna', '=', 'booking.idpengguna')->join('perawatan', 'perawatan.id_perawatan', '=', 'booking.id_perawatan')->where('idbooking', $Request->key)->get())->first();
+        $data['bayar'] = collect(Crud::table('pembayaran')->select()->where('idbooking', $Request->key)->get())->first();
+        return $data;
+    }
+    public function TBooking($Request, $Session)
+    {
+        $data = [
+            'judul' => 'Booking Perawatan',
+            'path' => 'TBooking',
+            'link' => 'TBooking',
+
+        ];
+        //Fungsi::fields('perawatan', new Crud);
+        $fields1 = '[
+                {"name":"id_perawatan","label":"ID Perawatan","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
 
                 {"name":"nama_perawatan","label":"Nama Perawatan","type":"text","max":"30","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
                 {"name":"jenis_perawatan","label":"Jenis Perawatan","type":"text","max":"25","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
@@ -169,8 +193,17 @@ class Standalone
                 {"name":"desk","label":"Deskripsi","type":"textarea","max":"65535","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
                 ]';
         $data['form'] = json_decode($fields1, true);
-        $data['form'][0]['val'] = "Pn-" . uniqid();
-        $data['data'] = collect(Crud::table('perawatan')->select()->get());
+        $fields1 = '[
+                 {"name":"idpengguna","label":"ID Pengguna","type":"text","max":"15","pnj":12,"val":null,"red":"readonly","input":true,"up":true,"tb":true},
+                {"name":"nama","label":"Nama Lengkap","type":"text","max":"30","pnj":8,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"jk","label":"Jenis Kelamin","type":"text","max":"10","pnj":4,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"no_hp","label":"No HP","type":"text","max":"12","pnj":6,"val":null,"red":"","input":true,"up":true,"tb":true},
+
+                {"name":"alamat","label":"Alamat","type":"text","max":"40","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
+                ]';
+        $data['form2'] = json_decode($fields1, true);
+        $data['data'] = collect(Crud::table('perawatan')->select()->where('id_perawatan', $Request->key)->get())->first();
+        $data['id'] = "Bo-" . uniqid();
 
         return $data;
     }
@@ -193,6 +226,8 @@ class Standalone
             'warna' => 'primary',
 
         ];
+        $data['data'] = collect(Crud::table('perawatan')->select()->limit(3)->get());
+
         return $data;
     }
 

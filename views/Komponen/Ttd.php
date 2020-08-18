@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <td>
-                    <p class="m-0 p-0 text-center">Nama Admin</p>
+                    <p class="m-0 p-0 text-center"><br></p>
                     <hr class="m-0 p-0" class="border border-dark">
                 </td>
             </tr>
@@ -61,7 +61,7 @@
             </tr>
             <tr>
                 <td>
-                    <p class="m-0 p-0 text-center">Nama Admin</p>
+                    <p class="m-0 p-0 text-center"><br></p>
                     <hr class="m-0 p-0" class="border border-dark">
                 </td>
             </tr>
